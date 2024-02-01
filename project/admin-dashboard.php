@@ -25,6 +25,24 @@ if (!isset($_SESSION["admin_username"])) {
         .notChangedByAdmin {
             display: none;
         }
+
+        .deniedStatus {
+            color: #A40200;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .acceptStatus {
+            color: #1BA400;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .awaitedStatus {
+            color: #C2B40B;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
     </style>
 </head>
 

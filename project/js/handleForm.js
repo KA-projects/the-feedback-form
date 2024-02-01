@@ -1,10 +1,14 @@
 $(function () {
   let responseOfFeedbacks;
   const awaitedStatus = "awaited";
+  const deniedStatus = "denied";
 
   function displayFeedback(feedbackArray) {
     for (const feedback of feedbackArray) {
-      if (feedback.status === awaitedStatus) {
+      if (
+        feedback.status === awaitedStatus ||
+        feedback.status === deniedStatus
+      ) {
         continue;
       }
 
