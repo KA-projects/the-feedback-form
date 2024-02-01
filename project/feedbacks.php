@@ -8,6 +8,10 @@
 
 <body>
     <div>
+        <a href="login.php">Login for admin</a>
+    </div>
+
+    <div>
         Sort by
         <button id="sortByName">Name</button>
         <button id="sortByEmail">Email</button>
