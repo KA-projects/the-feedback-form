@@ -1,28 +1,68 @@
 $(function () {
+  let responseOfFeedbacks;
+
+  function displayFeedback(feedbackArray) {
+    for (const feedback of feedbackArray) {
+      var feedbackElement = $(`<li>
+           <div>
+             <span>${feedback.name}</span> | <span>${feedback.email}</span> | <span>${feedback.date}</span> 
+           </div> 
+           <div>${feedback.text}</div>
+        </li>`);
+
+      $("#feedbackList").append(feedbackElement);
+    }
+  }
+
+  //get all feedbacks
   $.ajax({
     type: "GET",
+
     url: "http://localhost:8000/feedback-post.php",
     success: function (response) {
       console.log("Server response:", response);
+      responseOfFeedbacks = response;
+      responseOfFeedbacks.sort((a, b) => (b.date > a.date ? 1 : -1));
 
-      for (const feedback of response) {
-        var feedbackElement = $(`<li>
-       <div>
-         <span>${feedback.name} <span/> <span>${feedback.email} <span/> <span>${feedback.date}<span/> 
-       </div> 
-
-        <div>${feedback.text}</div>
-      </li>`);
-
-        $("#feedbackList").append(feedbackElement);
-      }
+      displayFeedback(responseOfFeedbacks);
     },
     error: function (error) {
       console.error("Error:", error);
     },
   });
 
-  $("#feedbackForm").submit(function (event) {
+  //sort feedbacks by name
+  $("#sortByName").on("click", () => {
+    responseOfFeedbacks.sort((a, b) =>
+      a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
+    );
+
+    $("#feedbackList").empty();
+
+    displayFeedback(responseOfFeedbacks);
+  });
+
+  //sort feedbacks by email
+  $("#sortByEmail").on("click", () => {
+    responseOfFeedbacks.sort((a, b) =>
+      a.email.toLowerCase() > b.email.toLowerCase() ? 1 : -1
+    );
+
+    $("#feedbackList").empty();
+
+    displayFeedback(responseOfFeedbacks);
+  });
+
+  //sort feedbacks by date
+  $("#sortByDate").on("click", () => {
+    responseOfFeedbacks.sort((a, b) => (b.date > a.date ? 1 : -1));
+
+    $("#feedbackList").empty();
+
+    displayFeedback(responseOfFeedbacks);
+  });
+
+  $("#feedbackForm").on("submit", function (event) {
     event.preventDefault();
 
     var formData = {
