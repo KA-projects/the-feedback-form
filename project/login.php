@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if (isset($_SESSION["admin_username"])) {
+    header("Location: admin-dashboard.php");
+    exit();
+}
+
 function validate_login($username, $password, $pdo)
 {
     $query = "SELECT * FROM feedbacks.admins WHERE username = ? AND password = ?";

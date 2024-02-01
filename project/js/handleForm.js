@@ -19,6 +19,13 @@ $(function () {
       }</span> | <span>${feedback.date}</span> 
       </div> 
       <div>${feedback.text}</div>
+
+       <input type="file" class="imageInput" accept=".jpg, .gif, .png">
+         <button data-email="${
+           feedback.email
+         }" class="uploadButton">Upload Image</button>
+          <div class="imageContainer"></div>
+
       <div class="${
         feedback.changedByAdmin == "yes"
           ? "changedByAdmin"
@@ -117,5 +124,42 @@ $(function () {
     $("#feedbackList").empty();
 
     displayFeedback(responseOfFeedbacks);
+  });
+
+  //add image
+  $("#feedbackList").on("click", ".uploadButton", function () {
+    let email = $(this).data("email");
+    let image = $(this).closest("li").find(".imageInput")[0];
+    let imageContainer = $(this).closest("li").find(".imageContainer");
+
+    var file = image.files[0];
+    if (file) {
+      var formData = new FormData();
+      formData.append("image", file);
+
+      $.ajax({
+        type: "POST",
+        url: "upload.php",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          console.log("Server response:", response);
+
+          let imageUrl = response.imageUrl;
+
+          if (imageUrl) {
+            imageContainer.html(`<img src="${imageUrl}" alt="Uploaded Image">`);
+          } else {
+            alert(response.error);
+          }
+        },
+        error: function (error) {
+          console.error("Error:", error);
+        },
+      });
+    } else {
+      alert("Please select an image.");
+    }
   });
 });
