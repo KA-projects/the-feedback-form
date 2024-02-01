@@ -41,6 +41,7 @@ $(function () {
     },
   });
 
+  //add feedback
   $("#feedbackForm").on("submit", function (event) {
     event.preventDefault();
 
@@ -58,7 +59,12 @@ $(function () {
       success: function (response) {
         console.log("Server response:", response);
         responseOfFeedbacks = response;
-        Preview(responseOfFeedbacks);
+
+        if (responseOfFeedbacks.success) {
+          Preview(responseOfFeedbacks);
+        } else {
+          alert(responseOfFeedbacks.message);
+        }
       },
       error: function (error) {
         console.error("Error:", error);
