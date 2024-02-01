@@ -26,7 +26,7 @@
         <label for="text"></label>
         <textarea id="text" cols="30" rows="10"></textarea>
 
-        <button type="submit">Send</button>
+        <button type="submit">Preview of feedback</button>
     </form>
 
     <script src="js/handleForm.js"></script>

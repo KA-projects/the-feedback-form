@@ -1,5 +1,23 @@
 $(function () {
   let responseOfFeedbacks;
+  const awaitedStatus = "awaited";
+
+  function displayFeedback(feedbackArray) {
+    for (const feedback of feedbackArray) {
+      if (feedback.status === awaitedStatus) {
+        continue;
+      }
+
+      var feedbackElement = $(`<li>
+      <div>
+        <span>${feedback.name}</span> | <span>${feedback.email}</span> | <span>${feedback.date}</span> 
+      </div> 
+      <div>${feedback.text}</div>
+     </li>`);
+
+      $("#feedbackList").append(feedbackElement);
+    }
+  }
 
   function Preview(feedbackArray) {
     var feedbackElement = $(`<li>
@@ -10,19 +28,6 @@ $(function () {
         </li>`);
 
     $("#feedbackList").append(feedbackElement);
-  }
-
-  function displayFeedback(feedbackArray) {
-    for (const feedback of feedbackArray) {
-      var feedbackElement = $(`<li>
-           <div>
-             <span>${feedback.name}</span> | <span>${feedback.email}</span> | <span>${feedback.date}</span> 
-           </div> 
-           <div>${feedback.text}</div>
-        </li>`);
-
-      $("#feedbackList").append(feedbackElement);
-    }
   }
 
   //get all feedbacks
