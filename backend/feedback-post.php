@@ -13,6 +13,7 @@ $table = "feedbacks.feedbacks_list";
 try {
     $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
 
+    //POST 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = $_POST["name"];
         $email = $_POST["email"];
@@ -31,6 +32,24 @@ try {
         $count = $stmt->rowCount();
 
         echo json_encode($count);
+    }
+    //GET
+    else if ($_SERVER['REQUEST_METHOD'] == "GET") {
+        $sql = "SELECT * FROM $table";
+        $result = $db->query($sql);
+
+        $data = array();
+
+        while ($row = $result->fetch()) {
+            $data[] = array(
+                'name' => $row["name"],
+                'email' => $row["email"],
+                'text' => $row["text"],
+                'date' => $row["date"]
+            );
+        }
+
+        echo json_encode($data);
     } else {
         $response = [
             'status' => 'error',
@@ -38,6 +57,8 @@ try {
         ];
         echo json_encode($response);
     }
+
+
 } catch (PDOException $e) {
     $response = [
         'status' => 'error',
