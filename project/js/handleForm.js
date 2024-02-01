@@ -1,6 +1,17 @@
 $(function () {
   let responseOfFeedbacks;
 
+  function Preview(feedbackArray) {
+    var feedbackElement = $(`<li>
+           <div>
+             <span>${feedbackArray.name}</span> | <span>${feedbackArray.email}</span> | <span>${feedbackArray.date}</span> 
+           </div> 
+           <div>${feedbackArray.text}</div>
+        </li>`);
+
+    $("#feedbackList").append(feedbackElement);
+  }
+
   function displayFeedback(feedbackArray) {
     for (const feedback of feedbackArray) {
       var feedbackElement = $(`<li>
@@ -17,8 +28,7 @@ $(function () {
   //get all feedbacks
   $.ajax({
     type: "GET",
-
-    url: "http://localhost:8000/feedback-post.php",
+    url: "handlerForm.php",
     success: function (response) {
       console.log("Server response:", response);
       responseOfFeedbacks = response;
@@ -29,6 +39,31 @@ $(function () {
     error: function (error) {
       console.error("Error:", error);
     },
+  });
+
+  $("#feedbackForm").on("submit", function (event) {
+    event.preventDefault();
+
+    var formData = {
+      name: $("#name").val(),
+      email: $("#email").val(),
+      text: $("#text").val(),
+      date: new Date().toISOString(),
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "handlerForm.php",
+      data: formData,
+      success: function (response) {
+        console.log("Server response:", response);
+        responseOfFeedbacks = response;
+        Preview(responseOfFeedbacks);
+      },
+      error: function (error) {
+        console.error("Error:", error);
+      },
+    });
   });
 
   //sort feedbacks by name
@@ -60,28 +95,5 @@ $(function () {
     $("#feedbackList").empty();
 
     displayFeedback(responseOfFeedbacks);
-  });
-
-  $("#feedbackForm").on("submit", function (event) {
-    event.preventDefault();
-
-    var formData = {
-      name: $("#name").val(),
-      email: $("#email").val(),
-      text: $("#text").val(),
-      date: new Date().toISOString(),
-    };
-
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8000/feedback-post.php",
-      data: formData,
-      success: function (response) {
-        console.log("Server response:", response);
-      },
-      error: function (error) {
-        console.error("Error:", error);
-      },
-    });
   });
 });

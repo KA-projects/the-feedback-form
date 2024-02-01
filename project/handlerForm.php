@@ -1,9 +1,5 @@
 <?php
 header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-
 
 $user = "admin";
 $password = "password";
@@ -29,12 +25,27 @@ try {
 
         $stmt->execute();
 
+
         $count = $stmt->rowCount();
 
-        echo json_encode($count);
-    }
-    //GET
-    else if ($_SERVER['REQUEST_METHOD'] == "GET") {
+        if ($count > 0) {
+            $responseData = [
+                'success' => true,
+                'message' => 'Data added successfully',
+                'name' => $name,
+                'email' => $email,
+                'text' => $text,
+                'date' => $date
+            ];
+        } else {
+            $responseData = [
+                'success' => false,
+                'message' => 'Failed to add data'
+            ];
+        }
+
+        echo json_encode($responseData);
+    } else if ($_SERVER['REQUEST_METHOD'] == "GET") {
         $sql = "SELECT * FROM $table";
         $result = $db->query($sql);
 
