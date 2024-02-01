@@ -3,6 +3,16 @@
 
 <head>
     <title>Feedback Form</title>
+    <style>
+        .changedByAdmin {
+            display: block;
+            color: #008BFF;
+        }
+
+        .notChangedByAdmin {
+            display: none;
+        }
+    </style>
     <script src="js/jquery-3.7.1.min.js"></script>
 </head>
 

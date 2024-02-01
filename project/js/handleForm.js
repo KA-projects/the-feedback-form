@@ -10,9 +10,16 @@ $(function () {
 
       var feedbackElement = $(`<li>
       <div>
-        <span>${feedback.name}</span> | <span>${feedback.email}</span> | <span>${feedback.date}</span> 
+        <span>${feedback.name}</span> | <span>${
+        feedback.email
+      }</span> | <span>${feedback.date}</span> 
       </div> 
       <div>${feedback.text}</div>
+      <div class="${
+        feedback.changedByAdmin == "yes"
+          ? "changedByAdmin"
+          : "notChangedByAdmin"
+      }">Changed by admin</div>
      </li>`);
 
       $("#feedbackList").append(feedbackElement);
