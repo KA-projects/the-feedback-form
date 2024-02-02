@@ -61,6 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="password">Password:</label>
         <input type="password" name="password" required><br>
         <button type="submit">Login</button>
+
+        <a href="feedbacks.php">Back to feedbacks page</a>
     </form>
     <?php
     if (isset($error_message)) {

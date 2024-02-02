@@ -16,50 +16,31 @@ if (!isset($_SESSION["admin_username"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <script src="js/jquery-3.7.1.min.js"></script>
-    <style>
-        .changedByAdmin {
-            display: block;
-            color: #008BFF;
-        }
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
 
-        .notChangedByAdmin {
-            display: none;
-        }
-
-        .deniedStatus {
-            color: #A40200;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .acceptStatus {
-            color: #1BA400;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .awaitedStatus {
-            color: #C2B40B;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-    </style>
 </head>
 
 <body>
-    <h2>Welcome,
-        <?php echo $_SESSION["admin_username"]; ?>!
-    </h2>
-    <p>This is the admin dashboard.</p>
-    <form id="editFeedback">
-        <p id="editedEmail"></p>
-        <textarea name="text" cols="30" rows="10"></textarea>
-        <button type="submit">Confirm</button>
-    </form>
-    <ul id="feedbacksListForAdmin"></ul>
-    <a href="logout.php">Logout</a>
+    <div class="container">
+        <h2>Welcome,
+            <?php echo $_SESSION["admin_username"]; ?>!
+        </h2>
+        <p>This is the admin dashboard.</p>
 
-    <script src="js/admin.js"></script>
+        <a href="feedbacks.php">Back to feedbacks page</a>
+        <a href="logout.php">Logout</a>
+
+        <form id="editFeedback">
+            <p id="editedEmail"></p>
+            <textarea name="text" cols="30" rows="10"></textarea>
+            <button type="submit">Confirm the change</button>
+        </form>
+        <ul id="feedbacksListForAdmin">
+
+        </ul>
+
+        <script src="js/admin.js"></script>
+    </div>
 </body>
 
 </html>
